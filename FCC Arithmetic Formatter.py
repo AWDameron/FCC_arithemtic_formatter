@@ -2,14 +2,14 @@ def arithmetic_arranger(problems, show_answers=False):
     answers = []
 
     if len(problems) > 5:
-        return print("Error: Too many problems.")
+        return "Error: Too many problems."
     
     top_numbers, operators, bottom_numbers = sort_arithmetic(problems)
     answers = solve_arithmetic(top_numbers,operators,bottom_numbers)
-    print_arithmetic(top_numbers,operators,bottom_numbers,answers)
+    answer_strings = print_arithmetic(top_numbers,operators,bottom_numbers,answers)
     
     if show_answers:
-        print('   '.join(answer_strings))
+        print('    '.join(answer_strings))
     
     return
 
@@ -81,4 +81,4 @@ def print_arithmetic(top_numbers,operators,bottom_numbers,answers):
  
     return answer_strings
         
-arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
+arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"],True)
