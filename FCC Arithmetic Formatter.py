@@ -1,27 +1,23 @@
 def arithmetic_arranger(problems, show_answers=False):
+    answers = []
+
     if len(problems) > 5:
         return print("Error: Too many problems.")
     
-    top_numbers, operators, bottom_numbers, dashes = sort_arithmetic(problems)
+    top_numbers, operators, bottom_numbers = sort_arithmetic(problems)
     answers = solve_arithmetic(top_numbers,operators,bottom_numbers)
+    print_arithmetic(top_numbers,operators,bottom_numbers,answers)
     
-    print('    '.join(top_numbers))
-    print('    '.join(operators))
-    print('    '.join(bottom_numbers))
-    print('    '.join(dashes))
-    print('    '.join(str(answers)))
-
     return
-    
+
+# Wanted to use OOP principles and break out more complicated methods and keep them seperate
+# This function is designed to take the initial list [problems] and break it into 3 seperate lists.
+# It also doubles as my validation method to make sure the data that is input meets FCC's projects requirements.
 def sort_arithmetic(problems):
     top_numbers = []
     operators = []
     bottom_numbers = []
-    dashes = []
-    x = 0
-    y = 0
-
-
+    
     for problem in problems:
         top,op,bot = problem.split()
 
@@ -37,32 +33,50 @@ def sort_arithmetic(problems):
         top_numbers.append(top)
         operators.append(op)
         bottom_numbers.append(bot)
-        
-        while y < len(top_numbers):
-            width = max(len(top_numbers[y]),len(bottom_numbers[y])) + 2
-            dashes.append('-' * width)
-            y += 1
+    
 
+    return top_numbers,operators,bottom_numbers
 
-    return top_numbers,operators,bottom_numbers,dashes
-
-def solve_arithmetic(top_number,operator,bottom_number):
+# This method is designed to just simply get the answers for the math problems, in the future I am going to
+# go back through and make this and sort_arithmetic() a single function
+def solve_arithmetic(top_numbers,operators,bottom_numbers):
     answers = []
     problem = 0
-    top_number = [int(top) for top in top_number]
-    bottom_number = [int(bot) for bot in bottom_number]
-    while problem < len(top_number):
-        if operator[problem] == "+":
-            answers.append(top_number[problem] + bottom_number[problem])
+    top_numbers = [int(top) for top in top_numbers]
+    bottom_numbers = [int(bot) for bot in bottom_numbers]
+    while problem <= len(top_numbers)-1:
+        if operators[problem] == "+":
+            answers.append(str(top_numbers[problem] + bottom_numbers[problem]))
         else: 
-            answers.append(top_number[problem] - bottom_number[problem])
+            answers.append(str(top_numbers[problem] - bottom_numbers[problem]))
         problem += 1
          
   
     return answers
-    
-  
-        
 
- # "0 1 2", "3 4 5", "6 7 8", "9 10 11", "12 13 14"   
+# This method simply prints out all of the information.  Originally I had several different for/while but learned about
+# python's zip method, which is a great time saver.
+def print_arithmetic(top_numbers,operators,bottom_numbers,answers):
+    top_strings = []
+    bottom_strings = []
+    answer_strings = []
+    dashes = []
+    x = 0
+
+    for top, op, bot,ans in zip(top_numbers, operators, bottom_numbers,answers):
+        width = max(len(top), len(bot)) + 2
+        
+        top_strings.append(f"{top:>{width}}")
+        bottom_strings.append(f"{op} {bot:>{width-2}}")
+        dashes.append('-' * width) 
+        answer_strings.append(f"{ans:>{width}}")
+    
+
+    print('    '.join(top_strings))
+    print('    '.join(bottom_strings))
+    print('    '.join(dashes))
+    print('    '.join(answer_strings))
+ 
+    return
+        
 arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
