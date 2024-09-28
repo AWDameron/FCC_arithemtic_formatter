@@ -8,6 +8,9 @@ def arithmetic_arranger(problems, show_answers=False):
     answers = solve_arithmetic(top_numbers,operators,bottom_numbers)
     print_arithmetic(top_numbers,operators,bottom_numbers,answers)
     
+    if show_answers:
+        print('   '.join(answer_strings))
+    
     return
 
 # Wanted to use OOP principles and break out more complicated methods and keep them seperate
@@ -75,8 +78,7 @@ def print_arithmetic(top_numbers,operators,bottom_numbers,answers):
     print('    '.join(top_strings))
     print('    '.join(bottom_strings))
     print('    '.join(dashes))
-    print('    '.join(answer_strings))
  
-    return
+    return answer_strings
         
 arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
