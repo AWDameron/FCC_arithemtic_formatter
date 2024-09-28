@@ -10,18 +10,19 @@ def arithmetic_arranger(problems, show_answers=False):
     
     top_numbers, operators, bottom_numbers = sort_arithmetic(problems)    
     answers = solve_arithmetic(top_numbers,operators,bottom_numbers)
-    answer_strings = print_arithmetic(top_numbers,operators,bottom_numbers,answers)
+    top_strings, bottom_strings, dashes, answer_strings = print_arithmetic(top_numbers,operators,bottom_numbers,answers)
     
     if show_answers:
-        print('    '.join(answer_strings))
-    
-    return
+        return print(f"{'    '.join(top_strings)}\n{'    '.join(bottom_strings)}\n{'    '.join(dashes)}\n{'    '.join(answer_strings)}")
+        
+    else: 
+        return print(f"{'    '.join(top_strings)}\n{'    '.join(bottom_strings)}\n{'    '.join(dashes)}")
+
 
 # Wanted to use OOP principles and break out more complicated methods and keep them seperate
 # This function is designed to take the initial list [problems] and break it into 3 seperate lists.
 # It also doubles as my validation method to make sure the data that is input meets FCC's projects requirements.
 def sort_arithmetic(problems):
-    
     top_numbers = []
     operators = []
     bottom_numbers = []
@@ -81,17 +82,10 @@ def print_arithmetic(top_numbers,operators,bottom_numbers,answers):
         bottom_strings.append(f"{op} {bot:>{width-2}}")
         dashes.append('-' * width) 
         answer_strings.append(f"{ans:>{width}}")
-    
 
-    print('    '.join(top_strings))
-    print('    '.join(bottom_strings))
-    print('    '.join(dashes))
- 
-    return answer_strings
+    return top_strings, bottom_strings, dashes, answer_strings
 
-# class for throwing errors.
-class ArithmeticError(Exception):
-    pass
+
 
 arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"]) 
 arithmetic_arranger(["3801 - 2", "123 + 49"])
